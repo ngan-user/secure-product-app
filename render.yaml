@@ -5,13 +5,9 @@ services:
     dockerfilePath: ./Dockerfile
     dockerContext: .
 
-    # Region gần Việt Nam
     region: singapore
-
-    # FREE plan
     plan: free
 
-    # Environment Variables
     envVars:
       - key: NODE_ENV
         value: production
@@ -28,8 +24,5 @@ services:
       - key: LOG_LEVEL
         value: info
 
-    # Health check
     healthCheckPath: /api/health
-
-    # Auto deploy
     autoDeploy: true
