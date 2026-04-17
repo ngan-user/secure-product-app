@@ -5,39 +5,39 @@
  
  services:
  # ─── Web Service (Node.js App) ───────────────────────────
- - type: web
-   name: secure-product-app
-   runtime: docker
-   dockerfilePath: ./Dockerfile
-   dockerContext: .
+  - type: web
+    name: secure-product-app
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
  
  # Region gần Việt Nam (tối ưu latency)
- region: singapore
+    region: singapore
  
  # ✅ FREE PLAN (không cần thẻ)
- plan: free
+    plan: free
  
  # ─── Environment Variables ───────────────────────────
- envVars:
- - key: NODE_ENV
-   value: production
+    envVars:
+      - key: NODE_ENV
+        value: production
  
- - key: PORT
-   value: 3000
+      - key: PORT
+        value: 3000
  
  # 🔐 JWT secret Render tự generate
- - key: JWT_SECRET
-   generateValue: true
+     - key: JWT_SECRET
+       generateValue: true
  
- - key: JWT_EXPIRES_IN
-   value: 1h
+     - key: JWT_EXPIRES_IN
+       value: 1h
  
  # 📊 Logging level
- - key: LOG_LEVEL
-   value: info
+     - key: LOG_LEVEL
+       value: info
  
  # ❤️ Health check endpoint
- healthCheckPath: /api/health
+     healthCheckPath: /api/health
  
  # 🚀 Auto deploy khi push GitHub
  autoDeploy: true
