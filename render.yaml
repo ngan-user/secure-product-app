@@ -1,43 +1,35 @@
-# ============================================================
- # render.yaml — Render Cloud Deployment Config
- # Deploy lên https://render.com
- # ============================================================
- 
- services:
- # ─── Web Service (Node.js App) ───────────────────────────
+services:
   - type: web
     name: secure-product-app
     runtime: docker
     dockerfilePath: ./Dockerfile
     dockerContext: .
- 
- # Region gần Việt Nam (tối ưu latency)
+
+    # Region gần Việt Nam
     region: singapore
- 
- # ✅ FREE PLAN (không cần thẻ)
+
+    # FREE plan
     plan: free
- 
- # ─── Environment Variables ───────────────────────────
+
+    # Environment Variables
     envVars:
       - key: NODE_ENV
         value: production
- 
+
       - key: PORT
         value: 3000
- 
- # 🔐 JWT secret Render tự generate
-     - key: JWT_SECRET
-       generateValue: true
- 
-     - key: JWT_EXPIRES_IN
-       value: 1h
- 
- # 📊 Logging level
-     - key: LOG_LEVEL
-       value: info
- 
- # ❤️ Health check endpoint
-     healthCheckPath: /api/health
- 
- # 🚀 Auto deploy khi push GitHub
- autoDeploy: true
+
+      - key: JWT_SECRET
+        generateValue: true
+
+      - key: JWT_EXPIRES_IN
+        value: 1h
+
+      - key: LOG_LEVEL
+        value: info
+
+    # Health check
+    healthCheckPath: /api/health
+
+    # Auto deploy
+    autoDeploy: true
