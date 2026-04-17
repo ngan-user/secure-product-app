@@ -15,8 +15,7 @@ RUN npm ci --omit=dev --audit \
 
 # Copy source
 COPY src/ ./src/
-COPY public/ ./public/ 2>/dev/null || true
-
+COPY public/ ./public/
 # ============================================================
 # Stage 2: Production image
 # ✅ SECURITY: Dùng image tối giản (alpine)
@@ -39,7 +38,7 @@ RUN mkdir -p /app/logs \
 # Copy từ builder stage
 COPY --chown=appuser:appgroup --from=builder /build/node_modules ./node_modules
 COPY --chown=appuser:appgroup --from=builder /build/src ./src
-COPY --chown=appuser:appgroup --from=builder /build/public ./public 2>/dev/null || true
+COPY --chown=appuser:appgroup --from=builder /build/public ./public
 COPY --chown=appuser:appgroup package.json ./
 
 # ✅ SECURITY: Chuyển sang non-root user
