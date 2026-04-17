@@ -6,10 +6,10 @@
  services:
  # ─── Web Service (Node.js App) ───────────────────────────
  - type: web
- name: secure-product-app
- runtime: docker
- dockerfilePath: ./Dockerfile
- dockerContext: .
+   name: secure-product-app
+   runtime: docker
+   dockerfilePath: ./Dockerfile
+   dockerContext: .
  
  # Region gần Việt Nam (tối ưu latency)
  region: singapore
@@ -20,21 +20,21 @@
  # ─── Environment Variables ───────────────────────────
  envVars:
  - key: NODE_ENV
- value: production
+   value: production
  
  - key: PORT
- value: 3000
+   value: 3000
  
  # 🔐 JWT secret Render tự generate
  - key: JWT_SECRET
- generateValue: true
+   generateValue: true
  
  - key: JWT_EXPIRES_IN
- value: 1h
+   value: 1h
  
  # 📊 Logging level
  - key: LOG_LEVEL
- value: info
+   value: info
  
  # ❤️ Health check endpoint
  healthCheckPath: /api/health
