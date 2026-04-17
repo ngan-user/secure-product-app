@@ -1,71 +1,43 @@
 # ============================================================
-# render.yaml — Render Cloud Deployment Config
-# Deploy lên https://render.com
-# ============================================================
-
-services:
-  # ─── Web Service (Node.js App) ───────────────────────────
-  - type: web
-    name: secure-product-app
-    runtime: docker
-    dockerfilePath: ./Dockerfile
-    dockerContext: .
-
-    # Region gần Việt Nam
-    region: singapore
-
-    plan: starter  # free tier: starter | standard | pro
-
-    # ✅ SECURITY: Biến môi trường từ Render Dashboard (không hard-code)
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: PORT
-        value: 3000
-      - key: DB_HOST
-        fromService:
-          name: secure-product-mysql
-          type: pserv
-          property: host
-      - key: DB_PORT
-        fromService:
-          name: secure-product-mysql
-          type: pserv
-          property: port
-      - key: DB_NAME
-        value: productdb
-      - key: DB_USER
-        sync: false          # Nhập thủ công trong Dashboard
-      - key: DB_PASSWORD
-        sync: false          # ✅ SECRET — nhập trong Render Dashboard
-      - key: JWT_SECRET
-        generateValue: true  # ✅ Render tự tạo giá trị ngẫu nhiên
-      - key: JWT_EXPIRES_IN
-        value: 1h
-      - key: LOG_LEVEL
-        value: info
-
-    healthCheckPath: /api/health
-
-    autoDeploy: true  # Tự động deploy khi push lên main
-
-  # ─── Private MySQL Service ───────────────────────────────
-  - type: pserv        # Private service — không public ra internet
-    name: secure-product-mysql
-    runtime: docker
-    dockerfilePath: ./Dockerfile.mysql
-    region: singapore
-    plan: starter
-    disk:
-      name: mysql-data
-      mountPath: /var/lib/mysql
-      sizeGB: 10
-    envVars:
-      - key: MYSQL_DATABASE
-        value: productdb
-      - key: MYSQL_ROOT_PASSWORD
-        generateValue: true   # ✅ Render tự generate
-      - key: MYSQL_USER
-        sync: false
-      - key: MYSQL_PASSWORD
-        sync: false
+ # render.yaml — Render Cloud Deployment Config
+ # Deploy lên https://render.com
+ # ============================================================
+ 
+ services:
+ # ─── Web Service (Node.js App) ───────────────────────────
+ - type: web
+ name: secure-product-app
+ runtime: docker
+ dockerfilePath: ./Dockerfile
+ dockerContext: .
+ 
+ # Region gần Việt Nam (tối ưu latency)
+ region: singapore
+ 
+ # ✅ FREE PLAN (không cần thẻ)
+ plan: free
+ 
+ # ─── Environment Variables ───────────────────────────
+ envVars:
+ - key: NODE_ENV
+ value: production
+ 
+ - key: PORT
+ value: 3000
+ 
+ # 🔐 JWT secret Render tự generate
+ - key: JWT_SECRET
+ generateValue: true
+ 
+ - key: JWT_EXPIRES_IN
+ value: 1h
+ 
+ # 📊 Logging level
+ - key: LOG_LEVEL
+ value: info
+ 
+ # ❤️ Health check endpoint
+ healthCheckPath: /api/health
+ 
+ # 🚀 Auto deploy khi push GitHub
+ autoDeploy: true
